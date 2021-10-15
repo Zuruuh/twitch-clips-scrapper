@@ -4,31 +4,31 @@ export const channels = [
   {
     id: 1,
     name: "Sports",
-    streamers: ["Ponce", "Kameto", "Domingo", "Gotaga"],
+    streamers: ["Ponce", "Kamet0", "Domingo", "Gotaga"],
   },
   {
     id: 2,
     name: "Jeux Vidéos",
-    streamers: ["Ponce", "Kameto", "Domingo", "Gotaga"],
+    streamers: ["Ponce", "Kamet0", "Domingo", "Gotaga"],
   },
   {
     id: 3,
     name: "Just Chatting",
-    streamers: ["Ponce", "Kameto", "Domingo", "Gotaga"],
+    streamers: ["Ponce", "Kamet0", "Domingo", "Gotaga"],
   },
   {
     id: 4,
     name: "Arts",
-    streamers: ["Ponce", "Kameto", "Domingo", "Gotaga"],
+    streamers: ["Ponce", "Kamet0", "Domingo", "Gotaga"],
   },
   {
     id: 5,
     name: "Musique",
-    streamers: ["Ponce", "Kameto", "Domingo", "Gotaga"],
+    streamers: ["Ponce", "Kamet0", "Domingo", "Gotaga"],
   },
   {
     id: 6,
     name: "Sports",
-    streamers: ["Ponce", "Kameto", "Domingo", "Gotaga"],
+    streamers: ["Ponce", "Kamet0", "Domingo", "Gotaga"],
   },
 ] as Channel[];
