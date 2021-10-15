@@ -1,6 +1,7 @@
-import { writeFile } from "fs";
+import { writeFile, existsSync } from "fs";
 import { Channel } from "../types/types";
 import { resolve } from "path";
+
 // See https://github.com/node-fetch/node-fetch/issues/1279#issuecomment-915063354
 const _importDynamic = new Function("modulePath", "return import(modulePath)");
 async function fetch(...args: any) {
@@ -18,9 +19,16 @@ export async function saveVideos(channel: Channel) {
     const path = resolve(
       `${__dirname}../../../videos/${i + 1}-${video.streamer}`
     );
-
-    writeFile(`${path}.mp4`, buffer, () => {
-      console.log(`Writing file at ${path}.mp4`);
-    });
+    try {
+      if (!existsSync(`${path}.mp4`)) {
+        writeFile(`${path}.mp4`, buffer, () => {
+          console.log(`Writing file at ${path}.mp4`);
+        });
+      } else {
+        console.log(`File at ${path}.mp4 already exists, skipping...`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
