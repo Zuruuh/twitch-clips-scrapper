@@ -3,13 +3,16 @@ import { Channel as ChannelData } from "./data/data";
 import { parseChannels } from "./utils/parseChannels";
 import { saveVideos } from "./utils/saveVideos";
 import { getClipVideo } from "./utils/getClipVideo";
+import { config } from "dotenv";
 
 import type { Channel } from "./types/types";
+
+config();
 
 async function setupBrowser(): Promise<{ browser: Browser; page: Page }> {
   const browser = await puppeteer.launch({
     headless: false,
-    executablePath: "/usr/bin/google-chrome-stable", // MUST use chrome, see https://github.com/puppeteer/puppeteer/issues/5697#issuecomment-639450469
+    executablePath: process.env.CHROME_EXEC_PATH, // MUST use chrome, see https://github.com/puppeteer/puppeteer/issues/5697#issuecomment-639450469
   });
   const page = await browser.newPage();
 
