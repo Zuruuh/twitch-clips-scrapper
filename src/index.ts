@@ -1,18 +1,19 @@
 import puppeteer, { Browser, Page } from "puppeteer";
-import { channels } from "./data/data";
-import { parseStreamers } from "./utils/parseStreamers";
+import { Channel as ChannelData } from "./data/data";
+import { parseChannels } from "./utils/parseChannels";
+import { saveVideos } from "./utils/saveVideos";
+import { getClipVideo } from "./utils/getClipVideo";
 
-import type { Channel, Video } from "./types/types";
+import type { Channel } from "./types/types";
 
 async function setupBrowser(): Promise<{ browser: Browser; page: Page }> {
   const browser = await puppeteer.launch({
     headless: false,
+    executablePath: "/usr/bin/google-chrome-stable", // MUST use chrome, see https://github.com/puppeteer/puppeteer/issues/5697#issuecomment-639450469
   });
   const page = await browser.newPage();
-  page.setViewport({
-    width: 1400,
-    height: 800,
-  });
+
+  console.log("Browser started");
 
   return {
     browser,
@@ -20,18 +21,17 @@ async function setupBrowser(): Promise<{ browser: Browser; page: Page }> {
   };
 }
 
-async function main(channels: Channel[]) {
+async function main(channels: Channel): Promise<Channel> {
   const { browser, page } = await setupBrowser();
 
-  const res = [];
-  for (const channel of channels) {
-    res.push(await parseStreamers(page, channel.streamers));
-  }
+  const res = await parseChannels(page, channels);
+
+  const clips = await getClipVideo(page, res);
 
   await browser.close();
-  return Promise.resolve(res);
+  return Promise.resolve(clips);
 }
 
-main(channels).then((videos) => {
-  console.log(videos);
+main(ChannelData).then(async (channels) => {
+  await saveVideos(channels);
 });
